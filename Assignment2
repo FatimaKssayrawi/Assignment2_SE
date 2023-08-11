@@ -1,0 +1,221 @@
+# function 1 that takes a string s and an integer i
+# return a concatenated string s, i times
+# if i = 0 or negative, return an empty string
+def reverse_string(s, i):
+  reversed_str = ""
+  count = 0
+  if i != 0 and i > 0:
+    while (count < i):
+      for char in s:
+        reversed_str = char + reversed_str
+      count = count + 1
+  return reversed_str
+
+
+original_string = "Hello"
+reversed_string = reverse_string(original_string, 2)
+print(reversed_string)  # Output: "olleHolleH"
+reversed_string = reverse_string(original_string, 0)
+print(reversed_string)  # Output: ""
+reversed_string = reverse_string(original_string, -2)
+print(reversed_string)  # Output: ""
+
+
+# function 2 that takes a string
+# return the same string ordered the uppercase letters then the lowercase letters
+def rearrange_string_upper_lower(s):
+  # initialize an empty string to store the re
+  rearranged_string = ""
+
+  # loop through each character to find the uppercase letters
+  for char in s:
+    if char.isupper():
+      rearranged_string += char
+
+  # loop through each character to find the lowercase letters
+  for char in s:
+    if char.islower():
+      rearranged_string += char
+
+  return rearranged_string
+
+
+s = "Hello World"
+result = rearrange_string_upper_lower(s)
+print(result)  # Output: "HWelloorld"
+
+
+# function 3 that takes two strings
+# check if s1 is a reordering of the characters in s2
+def is_reordering(s1, s2):
+  result = False
+  # check if s1 and s2 have the same length
+  if (len(s1) == len(s2)):
+    # sort all characters in s1
+    sorted_s1 = sorted(s1)
+    # sort all characters in s2
+    sorted_s2 = sorted(s2)
+    # compare the characters in both sorted lists
+    result = (sorted_s1 == sorted_s2)
+  return result
+
+
+s1 = "abcde"
+s2 = "edacb"
+s3 = "aabc"
+result = is_reordering(s1, s2)
+print(result)  # Output: True
+result = is_reordering(s1, s3)
+print(result)  # Output: False
+
+
+# function 4 that takes a list 
+# return the highest number with its index
+# return the lowest number with its index
+def find_highest_lowest_with_index(list):
+  highest_number = list[0]
+  highest_index = 0
+  lowest_number = list[0]
+  lowest_index = 0
+
+  for i in range(1, len(list)):
+    # search for the highest number with its index
+    if list[i] > highest_number:
+      highest_number = list[i]
+      highest_index = i
+    # search for the lowest number with its index
+    if list[i] < lowest_number:
+      lowest_number = list[i]
+      #print(lowest_number)
+      lowest_index = i
+
+  return highest_number, highest_index, lowest_number, lowest_index
+
+
+number_list = [5, 6, 3, 2, -1, 2, 0, 1, 10]
+highest_value, highest_index, lowest_value, lowest_index = find_highest_lowest_with_index(
+  number_list)
+print(
+  f"The highest number in the list: {highest_value}, at index: {highest_index}"
+)  # Outputs: Highest number: 30, Index: 2
+print(
+  f"The lowest number in the list: {lowest_value}, at index: {lowest_index}")
+
+
+# function 5 that counts the number of digits in a specific number
+def count_digits_recursive(number):
+    if number == 0:
+        return 0
+    result = 1 + count_digits_recursive(number // 10)
+    return result
+number1 = 123
+number2 = 10000
+
+count1 = count_digits_recursive(number1)
+count2 = count_digits_recursive(number2)
+
+print(f"Number of digits in {number1}: {count1}")  # Output: Number of digits in 123: 3
+print(f"Number of digits in {number2}: {count2}")  # Output: Number of digits in 10000: 5
+
+
+# function 6 that takes a list 
+# return cycle if the index never leave the boundaries
+# return out of bounds if the index is out of bounds or negative
+def list_jumps(jumps):
+    n = len(jumps)
+    current_index = 0
+    visited_indices = [False] * len(jumps)
+
+    while current_index >= 0 and current_index < n:
+        if visited_indices[current_index]:
+            return "cycle"
+        visited_indices[current_index] = True
+        current_index += jumps[current_index]
+    # current index is negative or greater than the length of list --> out of bounds
+    if current_index < 0 or current_index >= len(jumps):
+        return "out-of-bounds"
+    else:
+        return "cycle"
+
+    return "out-of-bounds"
+
+
+jumps_cycle = [2, 3, -1, 1, -2]
+jumps_out_of_bounds = [2, 3, -1, 1, -5]
+
+result_cycle = list_jumps(jumps_cycle)
+result_out_of_bounds = list_jumps(jumps_out_of_bounds)
+
+print(result_cycle)  # Output: cycle
+print(result_out_of_bounds)  # Output: out-of-bounds
+
+
+# function 7: POS system
+# function to calculate the total price for each item with quantity 
+def total_cost(quantity, unit_price): 
+     return quantity * unit_price
+ 
+# function to display the items in the list with its barcode, quantity, unit price
+def display_receipt(items): 
+    total_amount = 0
+    print("Your receipt is :")
+    for item in items:
+        barcode, quantity, unit_price = item
+        item_total = total_cost(quantity, unit_price)
+        print(f"Barcode : {barcode} --> {quantity} x {unit_price} = {item_total:.2f}")
+        total_amount += item_total
+    print("Total: {:.2f}".format(total_amount))
+    print()
+
+# function to add the items into the POS system
+def POS_system():
+    items_list = []
+    
+    while True:
+        add_item_input = input("Do you want to add an item to the list? (yes/no): ").lower()
+        
+        if add_item_input == "no":
+            print("Exiting the program.")
+            break
+        elif add_item_input == "yes":
+            barcode = input("Enter item barcode: ")
+            quantity = int(input("Enter quantity: "))
+            unit_price = float(input("Enter unit price: "))
+            items_list.append((barcode, quantity,unit_price))
+            print("Item added to the list.")
+            while True:
+                add_item_input = input("Do you want to add an item to the list? (yes/no): ").lower()
+                if add_item_input == "no":
+                    print("Exiting the program.")
+                    break
+                barcode = input("Enter item barcode: ")
+                quantity = int(input("Enter quantity: "))
+                unit_price = float(input("Enter unit price: "))
+                items_list.append((barcode, quantity,unit_price))
+                print("Item added to the list.")
+        else:
+            print("Invalid input. Please enter 'yes' or 'no'.")
+        display_receipt( items_list)
+
+POS_system()
+
+#sample run
+
+#Do you want to add an item to the list? (yes/no): yes
+
+#Enter item barcode: 457
+
+#Enter quantity: 45
+
+#Enter unit price: 2
+#Item added to the list.
+
+#Do you want to add an item to the list? (yes/no): no
+#Exiting the program.
+#Your receipt is :
+#Barcode : 457 --> 45 x 2.0 = 90.00
+#Total: 90.00
+
+
+#Do you want to add an item to the list? (yes/no): no
+#Exiting the program.
